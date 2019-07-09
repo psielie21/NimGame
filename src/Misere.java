@@ -17,8 +17,8 @@ public class Misere extends Nim {
      * @param human a Player object referencing the human player
      * @param computer a Player object referencing the computer
      */
-    public Misere(int[] initialState, Player human, Player computer) {
-        super(initialState, human, computer);
+    public Misere(int[] initialState, Player first) {
+        super(initialState, first);
     }
 
     @Override
@@ -39,13 +39,6 @@ public class Misere extends Nim {
         }
     }
 
-    @Override
-    public Board clone() {
-        int[] copiedArray = Arrays.copyOf(sticks, sticks.length);
-        Nim clonedGame = new Misere(copiedArray, human, computer);
-        return clonedGame;
-    }
-
     /**
      * Gets the winner of the misere mode.
      * The difference is that the winner in misere mode
@@ -56,13 +49,9 @@ public class Misere extends Nim {
     @Override
     public Player getWinner() {
         if (isGameOver()) {
-            if (getLastMove().getPlayer() == computer) {
-                return human;
-            } else {
-                return computer;
-            }
+            return getLastMove().getPlayer().other();
         } else {
-            return null;
+            throw new Error("No player determined yet!");
         }
     }
 

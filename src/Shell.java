@@ -138,8 +138,7 @@ public final class Shell {
         //get all the rows and create a new nim game
         int[] rows = parseRows(args);
         if (rows != null) {
-            game = new Nim(Arrays.copyOf(rows, rows.length),
-                        Player.HUMAN, Player.COMPUTER);
+            game = new Nim(Arrays.copyOf(rows, rows.length), first);
             isActiveGame = true;
             if (first == Player.COMPUTER) {
                 executeMachineMove();
@@ -165,8 +164,7 @@ public final class Shell {
         }
         int[] rows = parseRows(args);
         if (rows != null) {
-            game = new Misere(Arrays.copyOf(rows, rows.length),
-                        Player.HUMAN, Player.COMPUTER);
+            game = new Misere(Arrays.copyOf(rows, rows.length), first);
             isActiveGame = true;
             if (first == Player.COMPUTER) {
                 executeMachineMove();

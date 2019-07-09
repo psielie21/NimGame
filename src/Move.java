@@ -12,7 +12,11 @@ public final class Move {
      * An empty constructor since a move object is only updated
      * through its methods
      */
-    public Move() { }
+    public Move(int row, int sticksRemoved, Player player) {
+    	this.row = row;
+    	this.sticksRemoved = sticksRemoved;
+    	this.player = player;
+    }
 
     /**
      * Gets the player who made this move
@@ -20,18 +24,6 @@ public final class Move {
      */
     public Player getPlayer() {
         return this.player;
-    }
-
-    /**
-     * Updates this move object to the new values
-     * @param row the new row from which sticks were removed
-     * @param sticksRemoved how many sticks were removed
-     * @param player the Player who removed the sticks
-     */
-    public void setMove(int row, int sticksRemoved, Player player) {
-        this.row = row;
-        this.sticksRemoved = sticksRemoved;
-        this.player = player;
     }
 
     /**

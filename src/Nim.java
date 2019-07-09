@@ -10,6 +10,7 @@ public class Nim implements Board {
     protected int[] sticks;
     private static boolean verbose = false;
     private Move lastMove;
+    private Player current;
     protected Player human;
     protected Player computer;
 
@@ -23,11 +24,9 @@ public class Nim implements Board {
      * @param human a Player object referencing the human player
      * @param computer a Player object referencing the computer
      */
-    public Nim(int[] initialState, Player human, Player computer) {
-        this.sticks = initialState;
-        this.lastMove = new Move();
-        this.human = human;
-        this.computer = computer;
+    public Nim(int[] initialState, Player first) {
+        this.sticks = initialState.clone();
+        this.current = first;
     }
 
     /**
@@ -60,9 +59,10 @@ public class Nim implements Board {
      */
     @Override
     public void remove(int row, int s) {
-        if (isLegalMove(row, s)) {
+        if (current == Player.HUMAN || isLegalMove(row, s)) {
             sticks[row] -= s;
-            lastMove.setMove(row, s, human);
+            lastMove = new Move(row, s, current);
+            current = current.other();
         } else {
             throw new IllegalArgumentException("The provided move is illegal");
         }
@@ -75,13 +75,19 @@ public class Nim implements Board {
      */
     @Override
     public void machineRemove() {
-        int nimSum = calculateNimSum();
-        //check if we are in a winning state
-        if (nimSum != 0) {
-            handleWinningState(nimSum);
-        } else {
-            handleLosingState();
-        }
+    	if(current == Player.COMPUTER) {
+    		int nimSum = calculateNimSum();
+            //check if we are in a winning state
+            if (nimSum != 0) {
+                handleWinningState(nimSum);
+            } else {
+                handleLosingState();
+            }
+            current = current.other();
+    	} else {
+    		throw new RuntimeException("It is not the computers turn");
+    	}
+        
     }
 
     /**
@@ -130,9 +136,14 @@ public class Nim implements Board {
      */
     @Override
     public Board clone() {
-        int[] copiedArray = Arrays.copyOf(sticks, sticks.length);
-        Nim clonedGame = new Nim(copiedArray, human, computer);
-        return clonedGame;
+    	Nim clone = null;
+    	try {
+    		clone = (Nim) super.clone();
+    	} catch (CloneNotSupportedException e) {
+    		throw new Error("Clone not supported");
+    	}
+    	clone.sticks = sticks.clone();
+        return clone;
     }
 
     /**
@@ -246,7 +257,7 @@ public class Nim implements Board {
      */
     protected void finalizeMachineMove(int row, int s) {
         sticks[row] -= s;
-        lastMove.setMove(row, s, computer);
+        lastMove = new Move(row, s, current);
     }
 
     /**
@@ -258,7 +269,6 @@ public class Nim implements Board {
      * @return the index of the row that satisfies the described property
      */
     private int chooseRow(int nimSum) {
-
         int minVal = Integer.MAX_VALUE;
         int minIndex = -1;
         for (int i = 0; i < sticks.length; i++) {
