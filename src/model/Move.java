@@ -1,3 +1,5 @@
+package model;
+
 /**
  * A class representing a move of a player in the nim game
  * It only stores basic information, like who removed in

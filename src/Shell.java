@@ -1,6 +1,11 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
+import model.Board;
+import model.Misere;
+import model.Nim;
+import model.Player;
+
 /**
  * The shell provides the user interface to the whole nim program.
  * You can interact with the shell on the standard command line

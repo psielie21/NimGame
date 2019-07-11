@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package model;
 
 /**
  * The nim class provides an implementation of the classic nim game
@@ -272,12 +272,11 @@ public class Nim implements Board {
         int minVal = Integer.MAX_VALUE;
         int minIndex = -1;
         for (int i = 0; i < sticks.length; i++) {
-            if (sticks[i] < minVal && isValidRow(sticks[i], nimSum)) {
-                minVal = sticks[i];
-                minIndex = i;
+            if (isValidRow(sticks[i], nimSum)) {
+                return i;
             }
         }
-        return minIndex;
+        throw new Error("No valid row found!");
     }
 
     /**

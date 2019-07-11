@@ -1,3 +1,4 @@
+package model;
 /**
  * The NIM game. Two players remove alternately at least one up to at most all
  * sticks from a single row (= pile = heap) of sticks. The winner is determined

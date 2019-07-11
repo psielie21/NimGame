@@ -1,3 +1,4 @@
+package model;
 /**
  * Enum describing a player
  */
