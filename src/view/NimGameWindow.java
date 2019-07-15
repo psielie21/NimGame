@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 public class NimGameWindow extends JFrame{
 	JPanel gameContainer;
-	JPanel buttonContainer;
+	ButtonContainer buttonContainer;
 	
 	public NimGameWindow() {
 		super();
@@ -24,6 +24,10 @@ public class NimGameWindow extends JFrame{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(900,600);
 		setVisible(true);
+	}
+	
+	public void updateSelectedSticks(int selectedSticks) {
+		buttonContainer.setSelectedSticks(selectedSticks);
 	}
 	
 	public static void main(String[] args) {

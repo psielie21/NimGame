@@ -11,17 +11,46 @@ public class StickView extends JPanel{
 	int row;
 	int index;
 	boolean isVisible;
+	boolean isHighlighted;
 	
 	public StickView(int row, int index, boolean isVisible) {
 		this.row = row;
 		this.index = index;
 		this.isVisible = isVisible;
+		this.isHighlighted = false;
+	}
+	
+	public void remove() {
+		isVisible = false;
+		setEnabled(false);
+		repaint();
+	}
+	
+	public void setHighlight(boolean state) {
+		this.isHighlighted = state;
+		
+		if(isVisible) {
+			setOpaque(!state);
+			repaint();
+		}
+	}
+	
+	public boolean isHighlighted() {
+		return isHighlighted;
+	}
+	
+	public int getRow() {
+		return row; 
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(isVisible) {
+		if(isVisible) { 
 			Graphics2D g2 = (Graphics2D) g;
 			int middleX = getWidth() / 2;
 			
@@ -34,7 +63,12 @@ public class StickView extends JPanel{
 			
 			int r = (int) (getHeight() * 0.10);
 			g2.setColor(Color.BLUE);
-			g2.fillOval(middleX - STICK_WIDTH, y - r, r, r);
+			g2.fillOval(middleX - r/2, y - r, r, r);
+			
+			g2.setBackground(Color.BLUE);
+
+		} else {
+			
 		}
 		
 	}
