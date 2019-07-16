@@ -54,6 +54,7 @@ public class GameContainer extends JPanel{
 		public void mouseClicked(MouseEvent e) {
 			StickView stick = (StickView) e.getSource();
 			System.out.println(stick.getRow());
+			((NimGameWindow) getTopLevelAncestor()).removeSticks(stick.getRow());
 			
 		}
 

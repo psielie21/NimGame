@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,13 +18,14 @@ public class ButtonContainer extends JPanel{
 	JCheckBox firstMoveCheckBox;
 	JLabel sticksSelectedCounter;
 	
-	public ButtonContainer() {
+	public ButtonContainer(ActionListener newButtonListener) {
 		super();
 		
 		setLayout(new BorderLayout());
 		
 		northPanel = new JPanel();
 		newButton = new JButton("New");
+		newButton.addActionListener(newButtonListener);
 		undoButton = new JButton("Undo");
 		quitButton = new JButton("Quit");
 		misereCheckBox = new JCheckBox("Misere");
