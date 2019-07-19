@@ -22,7 +22,7 @@ public class StickView extends JPanel{
 	
 	public void remove() {
 		isVisible = false;
-		setEnabled(false);
+		//setEnabled(false);
 		repaint();
 	}
 	
@@ -31,6 +31,9 @@ public class StickView extends JPanel{
 		
 		if(isVisible) {
 			setOpaque(!state);
+			repaint();
+		} else {
+			setOpaque(true);
 			repaint();
 		}
 	}

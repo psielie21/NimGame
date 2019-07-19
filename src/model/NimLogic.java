@@ -18,11 +18,15 @@ public class NimLogic {
 	}
 	
 	public void removeSticks(int row, int sticks) {
+		for(int i = 0; i < game.getRowCount(); i++) {
+			System.out.println("Row "+ i +": " + game.getSticks(i));
+		}
 		game.remove(row,  sticks);
 		if(!game.isGameOver()) {
 			game.machineRemove();
 			history.push(game.clone());
 		}
+		
 	}
 	
 	public void undo() {

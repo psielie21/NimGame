@@ -59,7 +59,7 @@ public class Nim implements Board {
      */
     @Override
     public void remove(int row, int s) {
-        if (current == Player.HUMAN || isLegalMove(row, s)) {
+        if (current == Player.HUMAN && isLegalMove(row, s)) {
             sticks[row] -= s;
             lastMove = new Move(row, s, current);
             current = current.other();

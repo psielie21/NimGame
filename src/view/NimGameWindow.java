@@ -81,10 +81,10 @@ public class NimGameWindow extends JFrame{
 	}
 	
 	public void removeSticks(int row) {
+		System.out.println("row: " + row + " sticks: " + selectedSticks);
 		nimLogic.removeSticks(row, selectedSticks);
-		remove(gameContainer);
-		gameContainer = new GameContainer(nimLogic.getBoardState());
-		add(gameContainer);
+		
+		((GameContainer) gameContainer).updatePlayingField(nimLogic.getBoardState());
 		revalidate();
 	}
 	

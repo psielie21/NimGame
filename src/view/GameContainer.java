@@ -31,6 +31,14 @@ public class GameContainer extends JPanel{
 		playingField.setLayout(new GridLayout(sticks.length, maxSticks));
 		playingField.setBackground(Color.BLUE);
 		
+		initializePlayingField(sticks, maxSticks);
+		
+		add(rowNumbers, BorderLayout.WEST);
+		add(playingField, BorderLayout.CENTER);
+		this.setBackground(Color.RED);
+	}
+	
+	private void initializePlayingField(int[] sticks, int maxSticks) {
 		sticksOnBoard = new StickView[sticks.length][maxSticks];
 		
 		for(int i = 0; i < sticks.length; i++) {
@@ -42,10 +50,16 @@ public class GameContainer extends JPanel{
 				playingField.add(sticksOnBoard[i][j]);
 			}
 		}
-		
-		add(rowNumbers, BorderLayout.WEST);
-		add(playingField, BorderLayout.CENTER);
-		this.setBackground(Color.RED);
+	}
+	
+	public void updatePlayingField(int[] sticks) {
+		for(int i = 0; i < sticksOnBoard.length; i++) {
+			for(int j = 0; j < sticksOnBoard[i].length; j++) {
+				if(sticks[i] <= j) {
+					sticksOnBoard[i][j].remove();
+				}
+			}
+		}
 	}
 	
 	private class MatchViewListener implements MouseListener {
@@ -82,14 +96,13 @@ public class GameContainer extends JPanel{
 		public void mouseReleased(MouseEvent e) {
 			
 		}
-		
 	}
 	
 	private void highlightMatches(int row, int startingIndex, boolean turnOn) {
 		int selectedSticks = 0;
 		for(int i = startingIndex; i < sticks[row]; i++) {
+			sticksOnBoard[row][i].setHighlight(turnOn);
 			if(sticksOnBoard[row][i].isVisible) {
-				sticksOnBoard[row][i].setHighlight(turnOn);
 				selectedSticks += 1;
 			}
 		}
