@@ -55,8 +55,11 @@ public class GameContainer extends JPanel{
 	public void updatePlayingField(int[] sticks) {
 		for(int i = 0; i < sticksOnBoard.length; i++) {
 			for(int j = 0; j < sticksOnBoard[i].length; j++) {
+				//TODO write one method for activating/deactivating StickView
 				if(sticks[i] <= j) {
 					sticksOnBoard[i][j].remove();
+				} else {
+					sticksOnBoard[i][j].recover();
 				}
 			}
 		}
@@ -67,8 +70,9 @@ public class GameContainer extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			StickView stick = (StickView) e.getSource();
-			System.out.println(stick.getRow());
-			((NimGameWindow) getTopLevelAncestor()).removeSticks(stick.getRow());
+			if(stick.isOnField()) {
+				((NimGameWindow) getTopLevelAncestor()).removeSticks(stick.getRow());
+			}
 			
 		}
 
@@ -76,8 +80,6 @@ public class GameContainer extends JPanel{
 		public void mouseEntered(MouseEvent e) {
 			StickView stick = (StickView) e.getSource();
 			highlightMatches(stick.getRow(), stick.getIndex(), true);
-
-
 		}
 
 		@Override
@@ -102,7 +104,7 @@ public class GameContainer extends JPanel{
 		int selectedSticks = 0;
 		for(int i = startingIndex; i < sticks[row]; i++) {
 			sticksOnBoard[row][i].setHighlight(turnOn);
-			if(sticksOnBoard[row][i].isVisible) {
+			if(sticksOnBoard[row][i].isOnField()) {
 				selectedSticks += 1;
 			}
 		}

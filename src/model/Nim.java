@@ -10,7 +10,7 @@ public class Nim implements Board {
     protected int[] sticks;
     private static boolean verbose = false;
     private Move lastMove;
-    private Player current;
+    protected Player current;
     protected Player human;
     protected Player computer;
 
@@ -27,6 +27,9 @@ public class Nim implements Board {
     public Nim(int[] initialState, Player first) {
         this.sticks = initialState.clone();
         this.current = first;
+        if(first == Player.COMPUTER) {
+        	machineRemove();
+        }
     }
 
     /**
@@ -75,6 +78,7 @@ public class Nim implements Board {
      */
     @Override
     public void machineRemove() {
+    	System.out.println("Starting: " + current);
     	if(current == Player.COMPUTER) {
     		int nimSum = calculateNimSum();
             //check if we are in a winning state
@@ -87,6 +91,7 @@ public class Nim implements Board {
     	} else {
     		throw new RuntimeException("It is not the computers turn");
     	}
+    	System.out.println("Current player:" + current);
         
     }
 

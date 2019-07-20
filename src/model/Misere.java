@@ -35,6 +35,7 @@ public class Misere extends Nim {
             int s = (count % 2 == 0)
                     ? sticks[misereRow] - 1 : sticks[misereRow];
             finalizeMachineMove(misereRow, s);
+            current = current.other();
         } else {
             super.machineRemove();
         }

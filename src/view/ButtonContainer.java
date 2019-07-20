@@ -18,7 +18,9 @@ public class ButtonContainer extends JPanel{
 	JCheckBox firstMoveCheckBox;
 	JLabel sticksSelectedCounter;
 	
-	public ButtonContainer(ActionListener newButtonListener) {
+	public ButtonContainer(ActionListener newButtonListener, 
+						   ActionListener undoButtonListener, 
+						   ActionListener quitButtonListener) {
 		super();
 		
 		setLayout(new BorderLayout());
@@ -27,7 +29,9 @@ public class ButtonContainer extends JPanel{
 		newButton = new JButton("New");
 		newButton.addActionListener(newButtonListener);
 		undoButton = new JButton("Undo");
+		undoButton.addActionListener(undoButtonListener);
 		quitButton = new JButton("Quit");
+		quitButton.addActionListener(quitButtonListener);
 		misereCheckBox = new JCheckBox("Misere");
 		firstMoveCheckBox = new JCheckBox("Machine Opens");
 		sticksSelectedCounter = new JLabel("0");
@@ -41,6 +45,14 @@ public class ButtonContainer extends JPanel{
 		
 		add(northPanel, BorderLayout.NORTH);
 		add(sticksSelectedCounter, BorderLayout.SOUTH);
+	}
+	
+	public boolean isMisereBoxChecked() {
+		return misereCheckBox.isSelected();
+	}
+	
+	public boolean isFirstMoveBoxChecked() {
+		return firstMoveCheckBox.isSelected();
 	}
 	
 	public void setSelectedSticks(int sticksSelected) {

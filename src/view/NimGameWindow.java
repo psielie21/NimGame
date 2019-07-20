@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.Frame;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.NimLogic;
@@ -21,12 +23,14 @@ public class NimGameWindow extends JFrame{
 		super();
 		
 		setLayout(new BorderLayout());
+		this.setTitle("Nim Game");
 		selectedSticks = 0;
 		
-		nimLogic = new NimLogic(new int[] { 1, 2, 3, 5 }, true, true);
+		nimLogic = new NimLogic(new int[] { 1, 2, 3, 5 }, false, true);
 		
 		gameContainer = new GameContainer(nimLogic.getBoardState());
-		buttonContainer = new ButtonContainer(new NewButtonListener());
+		buttonContainer = new ButtonContainer(new NewButtonListener(), new UndoButtonListener(),
+											  new QuitButtonListener());
 		
 		add(gameContainer, BorderLayout.CENTER);
 		add(buttonContainer, BorderLayout.EAST);
@@ -40,7 +44,6 @@ public class NimGameWindow extends JFrame{
 	private class NewButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("DO STH NEW");
 			Random random = new Random();
 			int size = random.nextInt(9) + 1;
 			int[] randomArr = new int[size];
@@ -49,7 +52,9 @@ public class NimGameWindow extends JFrame{
 			}
 			// delegate the repaint/revalidate action to the child class
 			// or maybe to another method
-			nimLogic = new NimLogic(randomArr, false, true);
+			boolean isMisere = ((ButtonContainer) buttonContainer).isMisereBoxChecked();
+			boolean isHumanFirst = !((ButtonContainer) buttonContainer).isFirstMoveBoxChecked();
+			nimLogic = new NimLogic(randomArr, isMisere, isHumanFirst);
 			remove(gameContainer);
 			gameContainer = new GameContainer(nimLogic.getBoardState());
 			add(gameContainer);
@@ -61,17 +66,15 @@ public class NimGameWindow extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			nimLogic.undo();
-			remove(gameContainer);
-			gameContainer = new GameContainer(nimLogic.getBoardState());
-			add(gameContainer);
+			((GameContainer) gameContainer).updatePlayingField(nimLogic.getBoardState());
 			revalidate();
 		}
 	}
 	
 	private class QuitButtonListener implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			//dispatchEvent(new WindowEvent(super, WindowEvent.WINDOW_CLOSING));
+		public void actionPerformed(ActionEvent e) {
+			dispose();
 		}
 	}
 	
@@ -85,7 +88,14 @@ public class NimGameWindow extends JFrame{
 		nimLogic.removeSticks(row, selectedSticks);
 		
 		((GameContainer) gameContainer).updatePlayingField(nimLogic.getBoardState());
+		if(nimLogic.isGameOver()) {
+			showWinningDialog(nimLogic.getWinningMessage());
+		}
 		revalidate();
+	}
+	
+	private void showWinningDialog(String msg) {
+		JOptionPane.showMessageDialog(this, msg);
 	}
 	
 	public static void main(String[] args) {
