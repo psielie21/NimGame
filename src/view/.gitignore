@@ -7,3 +7,6 @@
 /NimGameWindow.class
 /RowNumber.class
 /StickView.class
+/NimGameWindow$UndoButtonAction.class
+/NimGameWindow$NewButtonAction.class
+/NimGameWindow$QuitButtonAction.class
