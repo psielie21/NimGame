@@ -1,9 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.Action;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,6 +28,9 @@ public class ButtonContainer extends JPanel{
 	JCheckBox misereCheckBox;
 	JCheckBox firstMoveCheckBox;
 	JLabel sticksSelectedCounter;
+	private final String MISERE_BUTTON_TEXT = "Misere";
+	private final String FIRST_MOVE_BUTTON_TEXT = "Machine Opens";
+
 	
 	/**
 	 * Creates a new ButtonContainer object whose buttons get
@@ -39,35 +45,53 @@ public class ButtonContainer extends JPanel{
 						   Action quitButtonAction) {
 		super();
 		
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		northPanel = new JPanel();
 		newButton = new JButton(newButtonAction);
+		newButton.setMnemonic(KeyEvent.VK_N);
 		undoButton = new JButton(undoButtonAction);
+		undoButton.setMnemonic(KeyEvent.VK_U);
 		quitButton = new JButton(quitButtonAction);
-		misereCheckBox = new JCheckBox("Misere");
-		firstMoveCheckBox = new JCheckBox("Machine Opens");
+		quitButton.setMnemonic(KeyEvent.VK_Q);
+		misereCheckBox = new JCheckBox(MISERE_BUTTON_TEXT);
+		misereCheckBox.setMnemonic(KeyEvent.VK_M);
+		firstMoveCheckBox = new JCheckBox(FIRST_MOVE_BUTTON_TEXT);
+		firstMoveCheckBox.setMnemonic(KeyEvent.VK_S);
 		sticksSelectedCounter = new JLabel("0");
 		
-		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
-		northPanel.add(newButton);
-		northPanel.add(undoButton);
-		northPanel.add(quitButton);
-		northPanel.add(misereCheckBox);
-		northPanel.add(firstMoveCheckBox);
+		add(newButton);
+		add(undoButton);
+		add(quitButton);
+		add(misereCheckBox);
+		add(firstMoveCheckBox);
 		
-		add(northPanel, BorderLayout.NORTH);
-		add(sticksSelectedCounter, BorderLayout.SOUTH);
+		add(Box.createVerticalGlue());
+		add(sticksSelectedCounter);
 	}
 	
+	/**
+cd 	 * 
+	 * @return Returns the boolean value of the misere check box.
+	 */
 	public boolean isMisereBoxChecked() {
 		return misereCheckBox.isSelected();
 	}
 	
+	/**
+	 * Checks whether the first move checkbox is checked.
+	 * 
+	 * @return Returns the boolean value of the first move checkbox.
+	 */
 	public boolean isFirstMoveBoxChecked() {
 		return firstMoveCheckBox.isSelected();
 	}
 	
+	/**
+	 * Sets the currently selected amount of sticks.
+	 * 
+	 * @param sticksSelected The currently amount of selected sticks.
+	 */
 	public void setSelectedSticks(int sticksSelected) {
 		sticksSelectedCounter.setText(sticksSelected + "");
 	}

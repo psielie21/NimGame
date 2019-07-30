@@ -100,7 +100,7 @@ public class GameContainer extends JPanel{
 	private class MatchViewListener implements MouseListener {
 
 		/**
-		 * On a mouse click remove this StickView and all StickViews
+		 * On a mouse click, remove this StickView and all StickViews
 		 * to the right.
 		 */
 		@Override
@@ -112,7 +112,7 @@ public class GameContainer extends JPanel{
 		}
 
 		/**
-		 * On a mouse enter highlight all StickViews left to this and this 
+		 * On a mouse enter, highlight all StickViews left to this and this 
 		 * StickView.
 		 */
 		@Override
@@ -122,7 +122,7 @@ public class GameContainer extends JPanel{
 		}
 
 		/**
-		 * On a mouse exit remove all highlights of this StickView row.
+		 * On a mouse exit, remove all highlights of this StickView row.
 		 */
 		@Override
 		public void mouseExited(MouseEvent e) {
