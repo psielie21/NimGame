@@ -1,4 +1,5 @@
 package model;
+
 /**
  * The NIM game. Two players remove alternately at least one up to at most all
  * sticks from a single row (= pile = heap) of sticks. The winner is determined
@@ -27,9 +28,9 @@ public interface Board extends Cloneable {
      * Executes a human move.
      *
      * @param row The number of the zero indexed row ascending top down.
-     * @param s The number of sticks to remove from row {@code row}. Must be at
-     *        least 1 and at most the number of sticks of the row.
-     * @throws IllegalStateException It is not the human's turn.
+     * @param s   The number of sticks to remove from row {@code row}. Must be
+     *            at least 1 and at most the number of sticks of the row.
+     * @throws IllegalStateException    It is not the human's turn.
      * @throws IllegalArgumentException The provided move is illegal.
      */
     void remove(int row, int s);

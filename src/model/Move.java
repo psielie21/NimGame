@@ -1,9 +1,8 @@
 package model;
 
 /**
- * A class representing a move of a player in the nim game
- * It only stores basic information, like who removed in
- * which row how many sticks.
+ * A class representing a move of a player in the nim game It only stores basic
+ * information, like who removed in which row how many sticks.
  */
 public final class Move {
     private int row;
@@ -11,17 +10,21 @@ public final class Move {
     private Player player;
 
     /**
-     * An empty constructor since a move object is only updated
-     * through its methods
+     * Creates a new Move object
+     * 
+     * @param row           The row from which sticks were removed
+     * @param sticksRemoved The amount of removed sticks
+     * @param player        The player who removed the sticks
      */
     public Move(int row, int sticksRemoved, Player player) {
-    	this.row = row;
-    	this.sticksRemoved = sticksRemoved;
-    	this.player = player;
+        this.row = row;
+        this.sticksRemoved = sticksRemoved;
+        this.player = player;
     }
 
     /**
      * Gets the player who made this move
+     * 
      * @return a Player object
      */
     public Player getPlayer() {
@@ -29,8 +32,9 @@ public final class Move {
     }
 
     /**
-     * Returns a string representation of the currently stored move.
-     * It outputs all stored information, like player, row and sticks.
+     * Returns a string representation of the currently stored move. It outputs
+     * all stored information, like player, row and sticks.
+     * 
      * @return a string representation of this move
      */
     public String toString() {
@@ -40,8 +44,8 @@ public final class Move {
         } else {
             output.append("Human player ");
         }
-        output.append("removed " + this.sticksRemoved
-                + " stick(s) from row " + (this.row + 1) + ".");
+        output.append("removed " + this.sticksRemoved + " stick(s) from row "
+                + (this.row + 1) + ".");
         return output.toString();
     }
 }

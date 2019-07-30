@@ -1,10 +1,10 @@
 package model;
 
 /**
- * The nim class provides an implementation of the classic nim game
- * where a computer plays against a human player. The moves made by
- * the computer are always optimal in the sense that once a winning
- * position is reached, the computer eventually wins the whole game.
+ * The nim class provides an implementation of the classic nim game where a
+ * computer plays against a human player. The moves made by the computer are
+ * always optimal in the sense that once a winning position is reached, the
+ * computer eventually wins the whole game.
  */
 public class Nim implements Board {
     protected int[] sticks;
@@ -15,20 +15,18 @@ public class Nim implements Board {
     protected Player computer;
 
     /**
-     * Sets up a game of nim, with the given initial
-     * board configuration, more specifically how many
-     * rows there are in total on the board and how
-     * many sticks there are per row.
+     * Sets up a game of nim, with the given initial board configuration, more
+     * specifically how many rows there are in total on the board and how many
+     * sticks there are per row.
      *
      * @param initialState an array describing the inital board state
-     * @param human a Player object referencing the human player
-     * @param computer a Player object referencing the computer
+     * @param first        a Player object referencing the first player
      */
     public Nim(int[] initialState, Player first) {
         this.sticks = initialState.clone();
         this.current = first;
-        if(first == Player.COMPUTER) {
-        	machineRemove();
+        if (first == Player.COMPUTER) {
+            machineRemove();
         }
     }
 
@@ -57,7 +55,7 @@ public class Nim implements Board {
      * Performs a move of the human player.
      *
      * @param row the row where the player wants to remove the sticks
-     * @param s the amount of sticks that should be removed
+     * @param s   the amount of sticks that should be removed
      * @throws IllegalArgumentException The provided move is illegal
      */
     @Override
@@ -72,27 +70,26 @@ public class Nim implements Board {
     }
 
     /**
-     * Performs a move of the machine.
-     * If it is on a winning position it keeps its advantage
-     * or otherwise tries to get to a winning position
+     * Performs a move of the machine. If it is on a winning position it keeps
+     * its advantage or otherwise tries to get to a winning position
      */
     @Override
     public void machineRemove() {
-    	System.out.println("Starting: " + current);
-    	if(current == Player.COMPUTER) {
-    		int nimSum = calculateNimSum();
-            //check if we are in a winning state
+        System.out.println("Starting: " + current);
+        if (current == Player.COMPUTER) {
+            int nimSum = calculateNimSum();
+            // check if we are in a winning state
             if (nimSum != 0) {
                 handleWinningState(nimSum);
             } else {
                 handleLosingState();
             }
             current = current.other();
-    	} else {
-    		throw new RuntimeException("It is not the computers turn");
-    	}
-    	System.out.println("Current player:" + current);
-        
+        } else {
+            throw new RuntimeException("It is not the computers turn");
+        }
+        System.out.println("Current player:" + current);
+
     }
 
     /**
@@ -141,20 +138,19 @@ public class Nim implements Board {
      */
     @Override
     public Board clone() {
-    	Nim clone = null;
-    	try {
-    		clone = (Nim) super.clone();
-    	} catch (CloneNotSupportedException e) {
-    		throw new Error("Clone not supported");
-    	}
-    	clone.sticks = sticks.clone();
+        Nim clone = null;
+        try {
+            clone = (Nim) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new Error("Clone not supported");
+        }
+        clone.sticks = sticks.clone();
         return clone;
     }
 
     /**
-     * Setter method for the global verbose attribute
-     * This attribute controls how much text is being
-     * outputted in the toString method
+     * Setter method for the global verbose attribute This attribute controls
+     * how much text is being outputted in the toString method
      *
      * @param v the new value for the verbose attribute
      */
@@ -167,11 +163,10 @@ public class Nim implements Board {
     }
 
     /**
-     * Gives the sticks on the board in a string representation
-     * If the verbose flag is set to true it appends also
-     * the binary representation of the amount of each row of sticks.
-     * Notice that the zero-indexed representation is outputted in
-     * one-indexed fashion
+     * Gives the sticks on the board in a string representation If the verbose
+     * flag is set to true it appends also the binary representation of the
+     * amount of each row of sticks. Notice that the zero-indexed representation
+     * is outputted in one-indexed fashion
      *
      * @return a string representation of the current board state
      */
@@ -199,7 +194,7 @@ public class Nim implements Board {
      * Checks if a potential move is legal.
      *
      * @param row the row of the move
-     * @param s the amount of sticks to be removed
+     * @param s   the amount of sticks to be removed
      * @return whether it is legal to make this make
      */
     private boolean isLegalMove(int row, int s) {
@@ -207,8 +202,8 @@ public class Nim implements Board {
     }
 
     /**
-     * Takes the XOR of all the amount of sticks on the board
-     * which corresponds to the nim sum of the current state
+     * Takes the XOR of all the amount of sticks on the board which corresponds
+     * to the nim sum of the current state
      *
      * @return the nim state of the current board state
      */
@@ -221,10 +216,9 @@ public class Nim implements Board {
     }
 
     /**
-     * When we are in a winning state we can win the whole
-     * game by playing optimal. This is by reducing the nim sum
-     * to zero, so that the opponent is forced to leave a nonzero
-     * nim sum which is equivalent to a winning state.
+     * When we are in a winning state we can win the whole game by playing
+     * optimal. This is by reducing the nim sum to zero, so that the opponent is
+     * forced to leave a nonzero nim sum which is equivalent to a winning state.
      *
      * @param nimSum the current nim sum of the board
      */
@@ -236,9 +230,8 @@ public class Nim implements Board {
     }
 
     /**
-     * Since there is no correct strategy to follow
-     * when we are in a losing state, we remove
-     * half of the sticks in the topmost row.
+     * Since there is no correct strategy to follow when we are in a losing
+     * state, we remove half of the sticks in the topmost row.
      */
     private void handleLosingState() {
         int row = getTopRow();
@@ -253,12 +246,11 @@ public class Nim implements Board {
     }
 
     /**
-     * After all the logic is done and the machine has decided
-     * on its move, this method handles the actual change of
-     * the state of the board
+     * After all the logic is done and the machine has decided on its move, this
+     * method handles the actual change of the state of the board
      *
      * @param row the row where the sticks should be removed
-     * @param s the amount of sticks to be removed
+     * @param s   the amount of sticks to be removed
      */
     protected void finalizeMachineMove(int row, int s) {
         sticks[row] -= s;
@@ -266,9 +258,9 @@ public class Nim implements Board {
     }
 
     /**
-     * Chooses the row with from which the computer removes the sticks.
-     * The row is per specification the minimal, valid row,
-     * where valid is explained in the function {@link #isValidRow(int, int)}
+     * Chooses the row with from which the computer removes the sticks. The row
+     * is per specification the minimal, valid row, where valid is explained in
+     * the function {@link #isValidRow(int, int)}
      *
      * @param nimSum the nimSum of the current board
      * @return the index of the row that satisfies the described property
@@ -285,10 +277,9 @@ public class Nim implements Board {
     }
 
     /**
-     * Checks if a row is a valid choice for the computer move.
-     * A row is a valid choice if its binary representation
-     * has a one bit at the index of the highest bit
-     * of the binary representation of the current nim sum.
+     * Checks if a row is a valid choice for the computer move. A row is a valid
+     * choice if its binary representation has a one bit at the index of the
+     * highest bit of the binary representation of the current nim sum.
      *
      * @param sticks the number of sticks in the row
      * @param nimSum the nim sum of the board
@@ -296,12 +287,12 @@ public class Nim implements Board {
      */
     private boolean isValidRow(int sticks, int nimSum) {
         /*
-        In order to be independent on the binary representation of the numbers
-        we make sure that the highest bit of the binary representation of
-        sticks in the row is at least that of the highest bit in the nim sum.
-        Paired with the condition that the XOR of sticks and
-        the nim sum is less than the amount of current sticks, we get
-        that sticks has to have a one bit at the desired position
+         * In order to be independent on the binary representation of the
+         * numbers we make sure that the highest bit of the binary
+         * representation of sticks in the row is at least that of the highest
+         * bit in the nim sum. Paired with the condition that the XOR of sticks
+         * and the nim sum is less than the amount of current sticks, we get
+         * that sticks has to have a one bit at the desired position
          */
         int highestBit = Integer.highestOneBit(nimSum);
         return (sticks ^ nimSum) <= sticks
